@@ -29,6 +29,10 @@ Every Mezo lock is an NFT in Mezo's VotingEscrow contract, and normal locks can 
 
 A 1% fee on each sale goes to the protocol. The fee is capped at 5% in the contract.
 
+## How it compares
+
+Aurove, live on Mezo mainnet, pools Earn positions into a liquid token traded on Mezo's DEX. That suits holders who want to stay in Earn and keep earning. Unlocked suits holders who want to leave: they sell the exact lock and set the price, the buyer receives that lock with its own end date and voting power, and no liquidity pool is needed. Locks deposited into a pool become managed and cannot be transferred, so the two serve different holders.
+
 ## Mezo integration
 
 | What | How it is used |
@@ -57,6 +61,18 @@ A 1% fee on each sale goes to the protocol. The fee is capped at 5% in the contr
 | MUSD | `0x118917a40FAF1CD7a13dB0Ef56C86De7973Ac503` |
 | veBTC | `0xB63fcCd03521Cf21907627bd7fA465C129479231` |
 | veMEZO | `0xaCE816CA2bcc9b12C59799dcC5A959Fb9b98111b` |
+
+## Source verification
+
+Mezo's explorer and Sourcify both failed to verify the deployed contract during the buildathon without giving a reason. The source compiles to the deployed bytecode exactly; to check:
+
+```
+forge build --force
+forge inspect src/VeMarket.sol:VeMarket deployedBytecode
+cast code 0xD55eC26d45dbE88b9Da2C476E2Cb96eC36A2e989 --rpc-url https://rpc.test.mezo.org
+```
+
+The two match except for the MUSD address, which is set at deployment (an immutable).
 
 ## Tests
 
