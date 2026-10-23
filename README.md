@@ -53,10 +53,10 @@ A 1% fee on each sale goes to the protocol. The fee is capped at 5% in the contr
 
 | Contract | Address (Mezo testnet, chain 31611) |
 | --- | --- |
-| VeMarket | _deploying_ |
+| VeMarket | [`0xD55eC26d45dbE88b9Da2C476E2Cb96eC36A2e989`](https://explorer.test.mezo.org/address/0xD55eC26d45dbE88b9Da2C476E2Cb96eC36A2e989) |
 | MUSD | `0x118917a40FAF1CD7a13dB0Ef56C86De7973Ac503` |
 | veBTC | `0xB63fcCd03521Cf21907627bd7fA465C129479231` |
-| veMEZO | _to be confirmed_ |
+| veMEZO | `0xaCE816CA2bcc9b12C59799dcC5A959Fb9b98111b` |
 
 ## Tests
 
@@ -64,18 +64,22 @@ A 1% fee on each sale goes to the protocol. The fee is capped at 5% in the contr
 forge test
 ```
 
-45 tests, including fuzz tests that check no MUSD is created or lost in sales and offers, and a fork test that lists and buys a real veBTC lock on Mezo testnet:
+44 unit tests, including fuzz tests that check no MUSD is created or lost in sales and offers (100% line coverage).
+
+4 more tests run against Mezo testnet itself: the deployed market selling a real veMEZO lock, a fresh market listing and selling real veBTC and veMEZO locks, and an offer accepted on a real veMEZO lock.
 
 ```
-MEZO_RPC=https://rpc.test.mezo.org forge test --match-contract VeMarketForkTest -vv
+FOUNDRY_PROFILE=fork MEZO_RPC=https://rpc.test.mezo.org forge test --match-contract VeMarketForkTest -vv
 ```
+
+Mezo testnet runs the Osaka EVM, so the fork profile sets `evm_version = "osaka"` to execute Mezo's own contracts.
 
 ## Run the app
 
 ```
 cd web
 npm install
-VITE_MARKET_ADDRESS=0x... VITE_MARKET_DEPLOY_BLOCK=... npm run dev
+npm run dev   # reads the deployed testnet market by default
 ```
 
 ## Roadmap

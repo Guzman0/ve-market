@@ -44,8 +44,12 @@ export interface Prices {
 export async function readLock(escrow: EscrowInfo, tokenId: bigint): Promise<Lock> {
   const [locked, votingPower, kind] = await Promise.all([
     publicClient.readContract({ address: escrow.address, abi: veAbi, functionName: 'locked', args: [tokenId] }),
+    // veMEZO names it votingPowerOfNFT; veBTC (older code) names it balanceOfNFT.
     publicClient
-      .readContract({ address: escrow.address, abi: veAbi, functionName: 'balanceOfNFT', args: [tokenId] })
+      .readContract({ address: escrow.address, abi: veAbi, functionName: 'votingPowerOfNFT', args: [tokenId] })
+      .catch(() =>
+        publicClient.readContract({ address: escrow.address, abi: veAbi, functionName: 'balanceOfNFT', args: [tokenId] }),
+      )
       .catch(() => 0n),
     publicClient.readContract({ address: escrow.address, abi: veAbi, functionName: 'escrowType', args: [tokenId] }),
   ])

@@ -11,6 +11,10 @@ remappings = [
   "forge-std/=lib/forge-std/src/",
 ]
 
+[profile.fork]
+# Mezo moved to the Osaka EVM; forked runs must execute its newer bytecode.
+evm_version = "osaka"
+
 [rpc_endpoints]
 mezo_testnet = "https://rpc.test.mezo.org"
 
