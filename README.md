@@ -40,7 +40,7 @@ Aurove, live on Mezo mainnet, pools Earn positions into a liquid token traded on
 | MUSD | The only payment asset. Permit signatures for one-step buys and offers. |
 | veMEZO and veBTC (Mezo VotingEscrow) | The traded assets. Lock size, end date, permanent flag, voting power and transfer type read on chain. |
 | Mezo PriceFeed | BTC price for valuing veBTC locks. |
-| Mezo DEX router | MEZO price in MUSD for valuing veMEZO locks. |
+| Mezo DEX router | MEZO price in MUSD for valuing veMEZO locks (CoinGecko as a fallback while MEZO trades only on concentrated-liquidity pools). |
 | Mezo Borrow | Buyers short on MUSD are pointed to borrow it against their BTC. |
 
 ## Safety design

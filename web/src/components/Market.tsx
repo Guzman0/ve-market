@@ -115,7 +115,7 @@ export function Market({ goSell }: { goSell: () => void }) {
       <p className="muted" style={{ fontSize: 13, marginTop: 10 }}>
         Values use today's on-chain price from Mezo ({prices.BTC ? `BTC ${fmtUsd(prices.BTC)}` : 'BTC price unavailable'}
         {', '}
-        {prices.MEZO ? `MEZO ${fmtUsd(prices.MEZO)} from the Mezo ${prices.mezoSource ?? 'DEX'}` : 'MEZO price unavailable'}). Yearly return assumes the price stays the same until the lock ends.
+        {prices.MEZO ? `MEZO ${fmtUsd(prices.MEZO)} from ${prices.mezoSource === 'CoinGecko' ? 'CoinGecko' : `the Mezo ${prices.mezoSource ?? 'DEX'}`}` : 'MEZO price unavailable'}). Yearly return assumes the price stays the same until the lock ends.
       </p>
 
       {open && <ListingDrawer listing={open} onClose={() => setOpen(null)} />}

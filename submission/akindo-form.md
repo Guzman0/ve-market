@@ -20,7 +20,7 @@ Every Mezo lock is an NFT in Mezo's VotingEscrow contract, and normal locks can 
 - A buyer pays in MUSD with one permit signature and one transaction. The lock moves to the buyer and the seller is paid in the same transaction.
 - A buyer can also make an offer on any lock. The MUSD is held by the contract until the owner accepts or the buyer withdraws. An offer only settles if the lock has not shrunk or been shortened since it was made.
 
-Each listing shows the locked amount, its value at today's on-chain price (BTC from Mezo's PriceFeed, MEZO from Mezo's DEX), time until unlock, voting power, the discount, and the buyer's yearly return if held to unlock.
+Each listing shows the locked amount, its value at today's on-chain price (BTC from Mezo's PriceFeed, MEZO from Mezo's DEX or CoinGecko), time until unlock, voting power, the discount, and the buyer's yearly return if held to unlock.
 
 MUSD is the only payment asset, and buyers short on MUSD are sent to Mezo Borrow. A 1% fee on each sale goes to the protocol, capped at 5% in the contract.
 
@@ -53,7 +53,7 @@ Testnet deployment.
 Guzman, solo builder (product, research, build). X: @the_first_guz
 
 **Links**
-- Live app: [live app link]
+- Live app: https://guzman0.github.io/ve-market/
 - Code: https://github.com/Guzman0/ve-market
 - Market contract: https://explorer.test.mezo.org/address/0xD55eC26d45dbE88b9Da2C476E2Cb96eC36A2e989
 - Deck: [deck link]

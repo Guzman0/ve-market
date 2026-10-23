@@ -10,7 +10,9 @@ export function fmtTokens(wei: bigint, max = 4) {
 
 export function fmtUsd(n: number | null) {
   if (n === null) return 'No price yet'
-  return '$' + n.toLocaleString('en-GB', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
+  // Small token prices (MEZO is a fraction of a cent) need more digits to mean anything.
+  const digits = n !== 0 && Math.abs(n) < 1 ? 5 : 2
+  return '$' + n.toLocaleString('en-GB', { minimumFractionDigits: 2, maximumFractionDigits: digits })
 }
 
 export function fmtMusd(wei: bigint) {

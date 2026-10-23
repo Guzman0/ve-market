@@ -38,7 +38,7 @@ export interface Prices {
   BTC: number | null
   MEZO: number | null
   /** Where the MEZO price came from, shown next to valuations. */
-  mezoSource?: 'testnet DEX' | 'mainnet DEX'
+  mezoSource?: 'testnet DEX' | 'mainnet DEX' | 'CoinGecko'
 }
 
 export async function readLock(escrow: EscrowInfo, tokenId: bigint): Promise<Lock> {
@@ -154,8 +154,11 @@ export async function loadPrices(): Promise<Prices> {
         // Testnet MEZO pools have no real liquidity, so fall back to Mezo mainnet's DEX.
         const testnet = await quoteInMusd(publicClient, MEZO_TOKEN, ADDR.musd, ADDR.router, ADDR.poolFactory)
         if (testnet !== null) return { price: testnet, source: 'testnet DEX' as const }
-        const mainnet = await quoteInMusd(mainnetClient, MEZO_TOKEN, MAINNET.musd, MAINNET.router, MAINNET.poolFactory)
-        return mainnet === null ? null : { price: mainnet, source: 'mainnet DEX' as const }
+        const mainnet = await quoteInMusd(mainnetClient, MEZO_TOKEN, MAINNET.musd, MAINNET.router, MAINNET.poolFactory).catch(() => null)
+        if (mainnet !== null) return { price: mainnet, source: 'mainnet DEX' as const }
+        // MEZO trades on Mezo's concentrated-liquidity pools, which this router does not quote.
+        const cg = await coingeckoUsd('mezo')
+        return cg === null ? null : { price: cg, source: 'CoinGecko' as const }
       })().catch(() => null)
     : Promise.resolve(null)
 
@@ -174,8 +177,23 @@ const MAINNET = {
 }
 
 const mainnetClient = createPublicClient({
-  transport: fallback([http('https://mezo.drpc.org'), http('https://mezo-mainnet.boar.network')]),
+  transport: fallback([
+    http('https://mainnet.mezo.public.validationcloud.io'),
+    http('https://mezo.drpc.org'),
+    http('https://mezo-mainnet.boar.network'),
+  ]),
 })
+
+async function coingeckoUsd(id: string): Promise<number | null> {
+  try {
+    const r = await fetch(`https://api.coingecko.com/api/v3/simple/price?ids=${id}&vs_currencies=usd`)
+    const j = (await r.json()) as Record<string, { usd?: number }>
+    const v = j[id]?.usd
+    return typeof v === 'number' && v > 0 ? v : null
+  } catch {
+    return null
+  }
+}
 
 /** Price of one token in MUSD from a Mezo DEX, trying the volatile pool then the stable one. */
 async function quoteInMusd(
