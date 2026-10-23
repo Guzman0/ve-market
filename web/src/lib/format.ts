@@ -80,3 +80,10 @@ export function fmtPower(wei: bigint) {
   if (n >= 100) return fmtNum(n, 0)
   return n.toLocaleString('en-GB', { maximumSignificantDigits: 3 })
 }
+
+/** Yearly return. Very short locks compound into meaningless figures, so anything past 1,000% is capped. */
+export function fmtReturn(n: number | null) {
+  if (n === null) return 'n/a'
+  if (n > 10) return 'Over 1,000%'
+  return fmtPct(n)
+}

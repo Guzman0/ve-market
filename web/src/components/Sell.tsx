@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { useApp } from '../state'
 import type { Listing, Lock, Offer } from '../lib/data'
 import { daysLeft, discount, lockValue, priceAtDiscount, returnToUnlock, tokens } from '../lib/metrics'
-import { fmtDate, fmtMusd, fmtNum, fmtPct, fmtTokens, fmtUsd, shortAddr, toWei, fmtPower } from '../lib/format'
+import { fmtDate, fmtMusd, fmtNum, fmtPct, fmtTokens, fmtUsd, shortAddr, toWei, fmtPower, fmtReturn } from '../lib/format'
 import { acceptOffer, listLock } from '../lib/actions'
 import { ConnectPrompt, Drawer, Stat, Timeline, TxButton } from './ui'
 import { EXPIRY_OPTIONS, ListingDrawer, expiryFrom } from './ListingDrawer'
@@ -135,8 +135,10 @@ function ListForm({ lock, onDone }: { lock: Lock; onDone: () => void }) {
   const { account, wallet, prices } = useApp()
   const value = lockValue(lock, prices)
   const days = daysLeft(lock)
-  const [disc, setDisc] = useState(0.15)
-  const [manual, setManual] = useState<string>(value ? fmtNum(priceAtDiscount(value, 0.15), 2).replace(/,/g, '') : '')
+  // Suggested discount scales with time left: 15% for a lock a year or more from unlock, down to 1% for one ending in days.
+  const startDisc = days === null ? 0.15 : Math.min(0.15, Math.max(0.01, Math.round((0.15 * days) / 365 * 100) / 100))
+  const [disc, setDisc] = useState(startDisc)
+  const [manual, setManual] = useState<string>(value ? fmtNum(priceAtDiscount(value, startDisc), 2).replace(/,/g, '') : '')
   const [expiry, setExpiry] = useState(0)
 
   const priceNum = Number(manual.replace(/,/g, ''))
@@ -188,7 +190,7 @@ function ListForm({ lock, onDone }: { lock: Lock; onDone: () => void }) {
         {realDisc !== null && (
           <div className="sum">
             <span>Buyer's yearly return if they hold to unlock</span>
-            <strong>{buyerReturn === null ? 'n/a' : fmtPct(buyerReturn)}</strong>
+            <strong>{fmtReturn(buyerReturn)}</strong>
           </div>
         )}
         {realDisc !== null && realDisc < 0 && (

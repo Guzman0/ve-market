@@ -2,7 +2,7 @@ import { useMemo, useState } from 'react'
 import { useApp } from '../state'
 import type { Listing } from '../lib/data'
 import { daysLeft, discount, lockValue, returnToUnlock, tokens } from '../lib/metrics'
-import { fmtMusd, fmtPct, fmtTokens, fmtUsd, fmtPower } from '../lib/format'
+import { fmtMusd, fmtPct, fmtTokens, fmtUsd, fmtPower, fmtReturn } from '../lib/format'
 import { isMarketConfigured } from '../lib/config'
 import { Timeline } from './ui'
 import { ListingDrawer } from './ListingDrawer'
@@ -107,7 +107,7 @@ export function Market({ goSell }: { goSell: () => void }) {
             <div className={`num-big ${disc !== null && disc > 0 ? 'good' : disc !== null ? 'bad' : ''}`}>
               {disc === null ? 'n/a' : disc >= 0 ? `${fmtPct(disc)} off` : `${fmtPct(-disc)} over`}
             </div>
-            <div className="num-big">{ret === null ? 'n/a' : fmtPct(ret)}</div>
+            <div className="num-big">{fmtReturn(ret)}</div>
             <div className="col-action"><span className="btn small ghost">View</span></div>
           </button>
         ))}
