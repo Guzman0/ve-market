@@ -4,3 +4,4 @@ broadcast/*/31611/dry-run/
 .env
 node_modules/
 web/dist/
+broadcast/**/run-[0-9]*.json
