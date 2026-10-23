@@ -10,7 +10,7 @@ import {VeMarket} from "../src/VeMarket.sol";
 contract Deploy is Script {
     // From github.com/mezo-org/musd and github.com/mezo-org/tigris testnet deployments.
     address constant MUSD_TESTNET = 0x118917a40FAF1CD7a13dB0Ef56C86De7973Ac503;
-    address constant VEBTC_TESTNET = 0xB63fcCd03521Cf21907627bd7fA465C129479231;
+    address constant VEBTC_TESTNET = 0x38E35d92E6Bfc6787272A62345856B13eA12130a;
 
     function run() external returns (VeMarket market) {
         address deployer = msg.sender;

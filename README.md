@@ -59,7 +59,7 @@ Aurove, live on Mezo mainnet, pools Earn positions into a liquid token traded on
 | --- | --- |
 | VeMarket | [`0xD55eC26d45dbE88b9Da2C476E2Cb96eC36A2e989`](https://explorer.test.mezo.org/address/0xD55eC26d45dbE88b9Da2C476E2Cb96eC36A2e989) |
 | MUSD | `0x118917a40FAF1CD7a13dB0Ef56C86De7973Ac503` |
-| veBTC | `0xB63fcCd03521Cf21907627bd7fA465C129479231` |
+| veBTC | `0x38E35d92E6Bfc6787272A62345856B13eA12130a` (the one Mezo's testnet app uses) |
 | veMEZO | `0xaCE816CA2bcc9b12C59799dcC5A959Fb9b98111b` |
 
 ## Source verification

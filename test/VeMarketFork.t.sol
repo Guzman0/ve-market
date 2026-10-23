@@ -14,7 +14,7 @@ interface IVeApprove {
 ///   MEZO_RPC=https://rpc.test.mezo.org forge test --match-contract VeMarketForkTest -vv
 contract VeMarketForkTest is Test {
     address constant MUSD = 0x118917a40FAF1CD7a13dB0Ef56C86De7973Ac503;
-    address constant VEBTC = 0xB63fcCd03521Cf21907627bd7fA465C129479231;
+    address constant VEBTC = 0x38E35d92E6Bfc6787272A62345856B13eA12130a; // the one Mezo's app uses
     address constant VEMEZO = 0xaCE816CA2bcc9b12C59799dcC5A959Fb9b98111b;
 
     VeMarket market;

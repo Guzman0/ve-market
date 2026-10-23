@@ -36,7 +36,8 @@ export const ESCROWS: EscrowInfo[] = [
   ...((env.VITE_VEMEZO_ADDRESS || '0xaCE816CA2bcc9b12C59799dcC5A959Fb9b98111b')
     ? [{ kind: 'veMEZO' as const, address: (env.VITE_VEMEZO_ADDRESS || '0xaCE816CA2bcc9b12C59799dcC5A959Fb9b98111b') as Address, asset: 'MEZO' as const, maxLockDays: 4 * 365 }]
     : []),
-  { kind: 'veBTC', address: '0xB63fcCd03521Cf21907627bd7fA465C129479231', asset: 'BTC', maxLockDays: 28 },
+  // The veBTC contract Mezo's testnet app uses (most holders). An older one from the public repo exists too.
+  { kind: 'veBTC', address: '0x38E35d92E6Bfc6787272A62345856B13eA12130a', asset: 'BTC', maxLockDays: 28 },
 ]
 
 export function escrowByAddress(a: string): EscrowInfo | undefined {
