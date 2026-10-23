@@ -2,7 +2,7 @@ import { useMemo, useState } from 'react'
 import { useApp } from '../state'
 import type { Listing } from '../lib/data'
 import { daysLeft, discount, lockValue, returnToUnlock, tokens } from '../lib/metrics'
-import { fmtMusd, fmtPct, fmtTokens, fmtUsd } from '../lib/format'
+import { fmtMusd, fmtPct, fmtTokens, fmtUsd, fmtPower } from '../lib/format'
 import { isMarketConfigured } from '../lib/config'
 import { Timeline } from './ui'
 import { ListingDrawer } from './ListingDrawer'
@@ -96,7 +96,7 @@ export function Market({ goSell }: { goSell: () => void }) {
           <button className="book-row" key={`${l.lock.escrow.kind}-${l.lock.tokenId}`} onClick={() => setOpen(l)}>
             <div>
               <div className="pos-name">{l.lock.escrow.kind} #{l.lock.tokenId.toString()}</div>
-              <div className="pos-sub">{fmtTokens(l.lock.votingPower, 2)} voting power</div>
+              <div className="pos-sub">{fmtPower(l.lock.votingPower)} voting power</div>
             </div>
             <div>
               <div className="num-big">{fmtTokens(l.lock.amount)} {l.lock.escrow.asset}</div>

@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { useApp } from '../state'
 import type { Listing } from '../lib/data'
 import { daysLeft, discount, lockValue, returnToUnlock, tokens } from '../lib/metrics'
-import { fmtDate, fmtMusd, fmtPct, fmtTokens, fmtUsd, shortAddr, toWei } from '../lib/format'
+import { fmtDate, fmtMusd, fmtPct, fmtTokens, fmtUsd, shortAddr, toWei, fmtPower } from '../lib/format'
 import { buyListing, cancelListing, cancelOffer, makeOffer, updateListing } from '../lib/actions'
 import { explorerAddress } from '../lib/chain'
 import { ConnectPrompt, Drawer, Stat, Timeline, TxButton } from './ui'
@@ -53,7 +53,7 @@ export function ListingDrawer({ listing, onClose }: { listing: Listing; onClose:
           v={disc === null ? 'n/a' : disc >= 0 ? `${fmtPct(disc)} off` : `${fmtPct(-disc)} over value`}
           tone={disc === null ? undefined : disc > 0 ? 'good' : 'bad'}
         />
-        <Stat k="Voting power" v={fmtTokens(lock.votingPower, 2)} />
+        <Stat k="Voting power" v={fmtPower(lock.votingPower)} />
         <Stat k="Yearly return to unlock" v={ret === null ? 'n/a' : fmtPct(ret)} />
       </div>
 

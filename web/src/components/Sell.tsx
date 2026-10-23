@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { useApp } from '../state'
 import type { Listing, Lock, Offer } from '../lib/data'
 import { daysLeft, discount, lockValue, priceAtDiscount, returnToUnlock, tokens } from '../lib/metrics'
-import { fmtDate, fmtMusd, fmtNum, fmtPct, fmtTokens, fmtUsd, shortAddr, toWei } from '../lib/format'
+import { fmtDate, fmtMusd, fmtNum, fmtPct, fmtTokens, fmtUsd, shortAddr, toWei, fmtPower } from '../lib/format'
 import { acceptOffer, listLock } from '../lib/actions'
 import { ConnectPrompt, Drawer, Stat, Timeline, TxButton } from './ui'
 import { EXPIRY_OPTIONS, ListingDrawer, expiryFrom } from './ListingDrawer'
@@ -215,7 +215,7 @@ function ListForm({ lock, onDone }: { lock: Lock; onDone: () => void }) {
         </div>
         <p className="muted" style={{ fontSize: 13 }}>
           Value uses today's {lock.escrow.asset} price on Mezo ({fmtUsd(lock.escrow.asset === 'BTC' ? prices.BTC : prices.MEZO)}).
-          {tokens(lock.votingPower) > 0 && ` The buyer also gets ${fmtTokens(lock.votingPower, 2)} voting power.`}
+          {tokens(lock.votingPower) > 0 && ` The buyer also gets ${fmtPower(lock.votingPower)} voting power.`}
         </p>
       </div>
     </>

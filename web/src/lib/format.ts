@@ -72,3 +72,11 @@ export function errorText(e: unknown): string {
   if (/ERC20InsufficientBalance/i.test(msg)) return 'Not enough MUSD in this wallet.'
   return msg.split('\n')[0]
 }
+
+/** Voting power: whole-number style for big positions, enough digits that a small veBTC lock does not read as 0. */
+export function fmtPower(wei: bigint) {
+  const n = Number(formatUnits(wei, 18))
+  if (n === 0) return '0'
+  if (n >= 100) return fmtNum(n, 0)
+  return n.toLocaleString('en-GB', { maximumSignificantDigits: 3 })
+}
